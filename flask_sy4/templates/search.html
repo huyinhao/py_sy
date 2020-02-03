@@ -1,0 +1,130 @@
+{##  我真诚地保证：#}
+{##  我自己独立地完成了整个程序从分析、设计到编码的所有工作。#}
+{##  如果在上述过程中，我遇到了什么困难而求教于人，那么，我将在程序实习报告中#}
+{##  详细地列举我所遇到的问题，以及别人给我的提示。#}
+{##  在此，我感谢 XXX, …, XXX对我的启发和帮助。下面的报告中，我还会具体地提到#}
+{##  他们在各个方法对我的帮助。#}
+{##  我的程序里中凡是引用到其他程序或文档之处，#}
+{##  例如教材、课堂笔记、网上的源代码以及其他参考书上的代码段,#}
+{##  我都已经在程序的注释里很清楚地注明了引用的出处。#}
+{##}
+{##  我从未没抄袭过别人的程序，也没有盗用别人的程序，#}
+{##  不管是修改式的抄袭还是原封不动的抄袭。#}
+{##  我编写这个程序，从来没有想过要去破坏或妨碍其他计算机系统的正常运转。 #}
+{##  <胡崟昊> 改成自己的名字#}
+{##}
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+             .title{
+            width: 1503px;
+            height: 80px;
+            background-color: rgba(51,58,69,1);
+            font-size: 24px;
+            color:rgba(245, 253, 253,0.8);
+            line-height: 80px;
+            margin: 24px auto;
+            text-align: center;
+            border-top: 4px solid indianred;
+            border-bottom: 4px solid deepskyblue;
+        }
+        </style>
+        <script src="https://code.highcharts.com.cn/jquery/jquery-1.8.3.min.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/modules/data.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/themes/dark-unica.js"></script>
+    </head>
+    <body>
+        <p class="title">{{ city }}</p>
+        <div id="container" style="min-width:400px;height:400px;margin-top:40px;margin-bottom:40px;"></div>
+        <script>
+            var chart = null;
+            $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/range.json&callback=?', function (data) {
+                chart = Highcharts.chart('container', {
+                    chart: {
+                        type: 'arearange',
+                        zoomType: 'x' ,// 水平缩放
+                        backgroundColor: {
+				            linearGradient: [0, 0, 500, 500],
+                            {#渐变色#}
+                            stops: [
+					            [0, 'rgba(245, 253, 253,1)'],
+                                [1, 'rgba(51,58,69,0.9)'],
+				            ]
+			            }
+                    },
+                    {#主标题#}
+                    title: {
+			            text: null
+		            },
+                    {#副标题#}
+                    subtitle:{
+                        text: {{ year1 }} + '年天气详情',
+                        style:{
+                            fontsize:20
+                        }
+
+                    },
+                    xAxis: {
+                        title:{
+                            text: '月份'
+                        },
+                        type: 'datetime',
+                        labels: {
+                            formatter: function () {
+                                return Highcharts.dateFormat('%m', this.value);
+                            }
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '温度 ( °C )',
+                            style: {
+                                color: 'rgba(51,58,69,0.9)'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: 'rgba(51,58,69,0.9)'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: '°C',
+                        backgroundColor: {
+                            linearGradient: [50, 0, 50, 30],
+                            stops: [
+                                [0, '#FFFFFF'],
+                                [1, 'rgba(51,58,69,0.9)']
+                            ]
+                        },
+                        borderWidth:2,
+                        borderColor: '#AAA',
+
+                    },
+                    legend: {
+                        align: 'right',
+			            verticalAlign: 'top',
+                    },
+                    series: [{
+                        name: '气温',
+                        data: {{ list }},
+                        color: 'rgb(103, 208, 241)',
+                        {#color: 'rgba(194,201,255,1)',#1F96f3}#}
+                        pointStart: Date.UTC({{ year2 }}, 0, 1),
+			            pointInterval: 24 * 3600 * 1000
+                    }]
+                });
+            });
+        </script>
+    <p class="title end">使用框架介绍flask（WSGI）、jinja2（网页模板）、highchart（图表）</p>
+    </body>
+</html>
